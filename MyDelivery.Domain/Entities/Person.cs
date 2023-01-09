@@ -3,10 +3,10 @@ namespace MyDelivery.Domain.Entities;
 
 public class Person
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Document { get; set; }
-    public string Phone { get; set; }
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public string Document { get; private set; }
+    public string Phone { get; private set; }
 
     public Person(string name, string document, string phone)
     {
@@ -23,8 +23,8 @@ public class Person
     private void Validate(string name, string document, string phone)
     {
         DomainValidationException.If(String.IsNullOrWhiteSpace(name), "O Nome é inválido");
-        DomainValidationException.If(String.IsNullOrWhiteSpace(document), "O Nome é inválido");
-        DomainValidationException.If(String.IsNullOrWhiteSpace(phone), "O Nome é inválido");
+        DomainValidationException.If(String.IsNullOrWhiteSpace(document), "O Documento é inválido");
+        DomainValidationException.If(String.IsNullOrWhiteSpace(phone), "O Telefone é inválido");
 
         Name= name;
         Document= document;
