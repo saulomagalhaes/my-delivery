@@ -8,7 +8,7 @@ public class Person
     public string Document { get; private set; }
     public string Phone { get; private set; }
 
-    public ICollection<Order> Orders { get; set; }
+    public ICollection<Purchase> Purchases { get; set; }
 
     public Person(string name, string document, string phone)
     {

@@ -8,7 +8,7 @@ public class Product
     public string Code { get; private set; }
     public decimal Price { get; private set; }
 
-    public ICollection<Order> Orders { get; set; }
+    public ICollection<Purchase> Purchases { get; set; }
 
 
     public Product(string name, string code, decimal price)
