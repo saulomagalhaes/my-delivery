@@ -30,7 +30,7 @@ public class Purchase
 
         PersonId = personId;
         ProductId = productId;
-        Date = DateTime.Now
+        Date = DateTime.Now;
     }
 }
 
