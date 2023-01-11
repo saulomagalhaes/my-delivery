@@ -13,6 +13,7 @@ public class Person
     public Person(string name, string document, string phone)
     {
         Validate(name, document, phone);
+        Purchases= new List<Purchase>();
     }
 
     public Person (int id, string name, string document, string phone)
@@ -20,6 +21,7 @@ public class Person
         DomainValidationException.If(id < 0, "O Id deve ser maior que zero");
         Id = id;
         Validate(name, document, phone);
+        Purchases = new List<Purchase>();
     }
 
     private void Validate(string name, string document, string phone)
