@@ -31,4 +31,19 @@ public class PersonService : IPersonService
         var data = await _personRepository.Create(person);
         return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(data));
     }
+
+    public async Task<ResultService<PersonDTO>> GetById(int id)
+    {
+        var person = await _personRepository.GetById(id);
+        if(person == null)
+            return ResultService.Fail<PersonDTO>("Pessoa não encontrado");
+        return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(person));
+    }
+
+    public async Task<ResultService<ICollection<PersonDTO>>> GetPeople()
+    {
+        var people = await _personRepository.GetPeople();
+        return ResultService.Ok<ICollection<PersonDTO>>(_mapper.Map<ICollection<PersonDTO>>(people));
+
+    }
 }
