@@ -1,0 +1,31 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MyDelivery.Application.Services;
+using MyDelivery.Application.Services.Contracts;
+using MyDelivery.Domain.Contracts.Repositories;
+using MyDelivery.Infra.Data.Context;
+using MyDelivery.Infra.Data.Repositories;
+
+namespace MyDelivery.Infra.IoC;
+
+public static class DependencyInjetcion
+{
+    public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("MyDeliveryConnection");
+        services.AddEntityFrameworkSqlServer()
+                .AddDbContext<MyDeliveryDbContext>(options => options.UseSqlServer(connectionString));
+
+        services.AddScoped<IPersonRepository, PersonRepository>();
+        return services;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddScoped<IPersonService, PersonService>();
+        return services;
+    }
+
+}
