@@ -1,0 +1,25 @@
+IF NOT EXISTS(SELECT * FROM SYSOBJECTS WHERE NAME ='people' AND XTYPE='U')
+	CREATE TABLE people(
+	id INT NOT NULL IDENTITY PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	document VARCHAR(20),
+	phone VARCHAR(20),
+);
+
+IF NOT EXISTS(SELECT * FROM SYSOBJECTS WHERE NAME ='products' AND XTYPE='U')
+	CREATE TABLE products(
+	id INT NOT NULL IDENTITY PRIMARY KEY,
+	name VARCHAR(100),
+	code VARCHAR(10),
+	price NUMERIC(10,2),
+);
+
+IF NOT EXISTS(SELECT * FROM SYSOBJECTS WHERE NAME ='purchases' AND XTYPE='U')
+	CREATE TABLE purchases(
+	id INT NOT NULL IDENTITY PRIMARY KEY,
+	person_id INT,
+	product_id INT,
+	date DATE,
+	CONSTRAINT fk_person_purchase FOREIGN KEY(person_id) REFERENCES people(id),
+	CONSTRAINT fk_product_purchase FOREIGN KEY(product_id) REFERENCES products(id)
+);
