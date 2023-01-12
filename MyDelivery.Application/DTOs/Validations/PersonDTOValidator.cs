@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MyDelivery.Application.DTOs.Person;
 
 namespace MyDelivery.Application.DTOs.Validations;
 
