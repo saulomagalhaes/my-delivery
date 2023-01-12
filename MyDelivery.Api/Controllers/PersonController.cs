@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyDelivery.Application.DTOs;
+using MyDelivery.Application.DTOs.Person;
 using MyDelivery.Application.Services.Contracts;
 
 namespace MyDelivery.Api.Controllers;
@@ -20,13 +21,13 @@ public class PersonController : ControllerBase
     {
         var result = await _personService.Create(personDTO);
         if(result.Sucess)
-            return Created("", result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         return BadRequest(result);
     }
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<ActionResult> GetById([FromRoute] int id)
+    public async Task<ActionResult> GetById(int id)
     {
         var result = await _personService.GetById(id);
         if(result.Sucess)
@@ -40,6 +41,26 @@ public class PersonController : ControllerBase
         var result = await _personService.GetPeople();
         if(result.Sucess)
             return Ok(result);
+        return BadRequest(result);
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<ActionResult> Update(int id, [FromBody] PersonDTO personDTO)
+    {
+        var result = await _personService.Update(id, personDTO);
+        if (result.Sucess)
+            return NoContent();
+        return BadRequest(result);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var result = await _personService.Delete(id);
+        if(result.Sucess)
+            return NoContent();
         return BadRequest(result);
     }
 }

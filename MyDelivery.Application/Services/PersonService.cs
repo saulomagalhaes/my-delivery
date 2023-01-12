@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyDelivery.Application.DTOs;
+using MyDelivery.Application.DTOs.Person;
 using MyDelivery.Application.DTOs.Validations;
 using MyDelivery.Application.Services.Contracts;
 using MyDelivery.Domain.Contracts.Repositories;
@@ -29,21 +29,47 @@ public class PersonService : IPersonService
 
         var person = _mapper.Map<Person>(personDTO);
         var data = await _personRepository.Create(person);
-        return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(data));
+        return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(data), data.Id);
     }
 
-    public async Task<ResultService<PersonDTO>> GetById(int id)
+    public async Task<ResultService> Delete(int id)
+    {
+        var person = await _personRepository.GetById(id);
+        if (person == null)
+            return ResultService.Fail<ReadPersonDTO>("Pessoa não encontrada");
+        await _personRepository.Delete(person);
+        return ResultService.Ok("Pessoa deletada");
+    }
+
+    public async Task<ResultService<ReadPersonDTO>> GetById(int id)
     {
         var person = await _personRepository.GetById(id);
         if(person == null)
-            return ResultService.Fail<PersonDTO>("Pessoa não encontrado");
-        return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(person));
+            return ResultService.Fail<ReadPersonDTO>("Pessoa não encontrado");
+        return ResultService.Ok<ReadPersonDTO>(_mapper.Map<ReadPersonDTO>(person));
     }
 
-    public async Task<ResultService<ICollection<PersonDTO>>> GetPeople()
+    public async Task<ResultService<ICollection<ReadPersonDTO>>> GetPeople()
     {
         var people = await _personRepository.GetPeople();
-        return ResultService.Ok<ICollection<PersonDTO>>(_mapper.Map<ICollection<PersonDTO>>(people));
+        return ResultService.Ok<ICollection<ReadPersonDTO>>(_mapper.Map<ICollection<ReadPersonDTO>>(people));
 
+    }
+
+    public async Task<ResultService> Update(int id, PersonDTO personDTO)
+    {
+        if(personDTO == null)
+            return ResultService.Fail("Informe o objeto corretamente");
+        var validation = new PersonDTOValidator().Validate(personDTO);
+        if (!validation.IsValid)
+            return ResultService.RequestError("Erro na validação do objeto", validation);
+
+        var person = await _personRepository.GetById(id);
+        if (person == null)
+            return ResultService.Fail("Pessoa não encontrado");
+
+        person = _mapper.Map(personDTO, person);
+        await _personRepository.Update(person);
+        return ResultService.Ok("Pessoa editada");
     }
 }
