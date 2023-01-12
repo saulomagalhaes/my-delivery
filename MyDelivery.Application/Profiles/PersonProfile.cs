@@ -12,7 +12,5 @@ public class PersonProfile : Profile
 		CreateMap<ReadPersonDTO, Person>();
         CreateMap<Person, PersonDTO>();
         CreateMap<PersonDTO, Person>();
-        CreateMap<Person, PersonDTO>();
-        CreateMap<PersonDTO, Person>();
     }
 }
