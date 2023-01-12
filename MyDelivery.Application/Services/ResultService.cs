@@ -6,6 +6,7 @@ public class ResultService
 {
     public bool Sucess { get; set; }
     public string Message { get; set; }
+    public int? Id { get; set; }
     public ICollection<ErrorValidation> Errors { get; set; }
 
     public static ResultService RequestError(string message, ValidationResult validationResult)
@@ -32,7 +33,8 @@ public class ResultService
     public static ResultService<T> Fail<T>(string message) => new ResultService<T> { Sucess = false, Message = message };
 
     public static ResultService Ok(string message) => new ResultService { Sucess= true, Message = message };
-    public static ResultService<T> Ok<T>(T data) => new ResultService<T> { Sucess= true, Data = data };
+    public static ResultService<T> Ok<T>(T data) => new ResultService<T> { Sucess= true, Data = data};
+    public static ResultService<T> Ok<T>(T data, int id) => new ResultService<T> { Sucess= true, Data = data, Id = id};
 
 }
 
