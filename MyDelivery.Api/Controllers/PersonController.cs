@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyDelivery.Application.DTOs;
 using MyDelivery.Application.DTOs.Person;
 using MyDelivery.Application.Services.Contracts;
 
@@ -21,8 +20,8 @@ public class PersonController : ControllerBase
     {
         var result = await _personService.Create(personDTO);
         if(result.Sucess)
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-        return BadRequest(result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result.Data);
+        return BadRequest(new { errors = result.Errors });
     }
 
     [HttpGet]
@@ -31,8 +30,8 @@ public class PersonController : ControllerBase
     {
         var result = await _personService.GetById(id);
         if(result.Sucess)
-            return Ok(result);
-        return BadRequest(result);
+            return Ok(result.Data);
+        return NotFound(new { error = result.Message });
     }
 
     [HttpGet]
@@ -40,8 +39,8 @@ public class PersonController : ControllerBase
     {
         var result = await _personService.GetPeople();
         if(result.Sucess)
-            return Ok(result);
-        return BadRequest(result);
+            return Ok(result.Data);
+        return BadRequest(new { errors = result.Errors });
     }
 
     [HttpPut]
@@ -51,7 +50,9 @@ public class PersonController : ControllerBase
         var result = await _personService.Update(id, personDTO);
         if (result.Sucess)
             return NoContent();
-        return BadRequest(result);
+        if(result.Message == "Problema na validação")
+            return BadRequest(new { errors = result.Errors }); 
+        return NotFound(new { errors = result.Message });
     }
 
     [HttpDelete]
@@ -61,6 +62,6 @@ public class PersonController : ControllerBase
         var result = await _personService.Delete(id);
         if(result.Sucess)
             return NoContent();
-        return BadRequest(result);
+        return NotFound(new { error = result.Message });
     }
 }
