@@ -16,7 +16,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] PersonDTO personDTO)
+    public async Task<ActionResult> Create([FromBody] PersonDTO personDTO)
     {
         var result = await _personService.Create(personDTO);
         if(result.Sucess)
