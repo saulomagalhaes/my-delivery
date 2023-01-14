@@ -19,6 +19,7 @@ public static class DependencyInjection
                 .AddDbContext<MyDeliveryDbContext>(options => options.UseSqlServer(connectionString));
 
         services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
         return services;
     }
 
@@ -26,6 +27,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(PersonProfile));
         services.AddScoped<IPersonService, PersonService>();
+        services.AddScoped<IProductService, ProductService>();
         return services;
     }
 
