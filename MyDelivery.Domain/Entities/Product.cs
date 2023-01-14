@@ -19,7 +19,7 @@ public class Product
 
     public Product(int id, string name, string code, decimal price)
     {
-        DomainValidationException.If(id < 0, "O Id deve ser maior que zero");
+        DomainValidationException.If(id <= 0, "O Id deve ser maior que zero");
         Id = id;
         Validate(name, code, price);
         Purchases = new List<Purchase>();

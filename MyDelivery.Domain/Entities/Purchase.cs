@@ -18,15 +18,15 @@ public class Purchase
 
     public Purchase(int id, int productId, int personId)
     {
-        DomainValidationException.If(id < 0, "O Id deve ser maior que zero");
+        DomainValidationException.If(id <= 0, "O Id deve ser maior que zero");
         Id = id;
         Validate(productId, personId);
     }
 
     private void Validate(int productId, int personId)
     {
-        DomainValidationException.If(productId < 0, "O Produto é inválido");
-        DomainValidationException.If(personId < 0, "A Pessoa é inválida");
+        DomainValidationException.If(productId <= 0, "O Produto é inválido");
+        DomainValidationException.If(personId <= 0, "A Pessoa é inválida");
 
         PersonId = personId;
         ProductId = productId;

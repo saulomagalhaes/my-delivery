@@ -18,7 +18,7 @@ public class Person
 
     public Person (int id, string name, string document, string phone)
     {
-        DomainValidationException.If(id < 0, "O Id deve ser maior que zero");
+        DomainValidationException.If(id <= 0, "O Id deve ser maior que zero");
         Id = id;
         Validate(name, document, phone);
         Purchases = new List<Purchase>();
