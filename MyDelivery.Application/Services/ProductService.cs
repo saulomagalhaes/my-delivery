@@ -55,9 +55,9 @@ public class ProductService : IProductService
 
     public async Task<ResultService> Update(int id, ProductDTO productDTO)
     {
-        var validation = new ProductDTOValidator().Validate(productDTO);
-        if (!validation.IsValid)
-            return ResultService.RequestError("Problema na validação", validation);
+        var result = new ProductDTOValidator().Validate(productDTO);
+        if (!result.IsValid)
+            return ResultService.RequestError("Problema na validação", result);
 
         var product = await _productRepository.GetById(id);
         if (product == null)

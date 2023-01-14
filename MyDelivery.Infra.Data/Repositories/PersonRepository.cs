@@ -30,6 +30,11 @@ public class PersonRepository : IPersonRepository
         return await _db.People.FirstOrDefaultAsync(p => p.Id == id); 
     }
 
+    public async Task<int> GetIdByDocument(string document)
+    {
+        return (await _db.People.FirstOrDefaultAsync(p => p.Document == document))? .Id ?? 0;
+    }
+
     public async Task<ICollection<Person>> GetPeople()
     {
         return await _db.People.ToListAsync();

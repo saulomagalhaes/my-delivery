@@ -9,4 +9,5 @@ public interface IPersonRepository
     Task<Person> Create(Person person);
     Task Update(Person person);
     Task Delete(Person person);
+    Task<int> GetIdByDocument(string document);
 }

@@ -53,9 +53,9 @@ public class PersonService : IPersonService
 
     public async Task<ResultService> Update(int id, PersonDTO personDTO)
     {
-        var validation = new PersonDTOValidator().Validate(personDTO);
-        if (!validation.IsValid)
-            return ResultService.RequestError("Problema na validação", validation);
+        var result = new PersonDTOValidator().Validate(personDTO);
+        if (!result.IsValid)
+            return ResultService.RequestError("Problema na validação", result);
 
         var person = await _personRepository.GetById(id);
         if (person == null)
