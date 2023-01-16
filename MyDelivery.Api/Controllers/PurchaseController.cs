@@ -35,4 +35,23 @@ public class PurchaseController : ControllerBase
             return NotFound(new { error = result.Message });
         }
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetPurchases()
+    {
+        var result = await _purchaseService.GetPurchases();
+        if (result.Sucess)
+            return Ok(result.Data);
+        return BadRequest(result);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult> GetById(int id)
+    {
+        var result = await _purchaseService.GetById(id);
+        if (result.Sucess)
+            return Ok(result.Data);
+        return NotFound(new { error = result.Message });
+    }
 }

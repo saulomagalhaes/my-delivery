@@ -4,8 +4,6 @@ using MyDelivery.Application.DTOs.Validations;
 using MyDelivery.Application.Services.Contracts;
 using MyDelivery.Domain.Contracts.Repositories;
 using MyDelivery.Domain.Entities;
-using MyDelivery.Domain.Validations;
-using System.Runtime.Intrinsics.Arm;
 
 namespace MyDelivery.Application.Services;
 
@@ -40,5 +38,20 @@ public class PurchaseService : IPurchaseService
         readPurchaseDTO = _mapper.Map<ReadPurchaseDTO>(purchaseDTO);
         readPurchaseDTO.Id = data.Id;
         return ResultService.Ok<ReadPurchaseDTO>(readPurchaseDTO, data.Id);
+    }
+
+    public async Task<ResultService<PurchaseDetailsDTO>> GetById(int id)
+    {
+        var purchase = await _purchaseRepository.GetById(id);
+        if (purchase == null)
+            return ResultService.Fail<PurchaseDetailsDTO>("Compra não encontrada");
+
+        return ResultService.Ok<PurchaseDetailsDTO>(_mapper.Map<PurchaseDetailsDTO>(purchase)); 
+    }
+
+    public async Task<ResultService<ICollection<PurchaseDetailsDTO>>> GetPurchases()
+    {
+        var purchases = await _purchaseRepository.GetPurchases();
+        return ResultService.Ok<ICollection<PurchaseDetailsDTO>>(_mapper.Map<ICollection<PurchaseDetailsDTO>>(purchases));
     }
 }
