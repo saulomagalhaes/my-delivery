@@ -23,6 +23,13 @@ public class Purchase
         Validate(productId, personId);
     }
 
+    public void Update(int id, int productId, int personId)
+    {
+        DomainValidationException.If(id <= 0, "O Id deve ser maior que zero");
+        Id = id;
+        Validate(productId, personId);
+    }
+
     private void Validate(int productId, int personId)
     {
         DomainValidationException.If(productId <= 0, "O Produto é inválido");

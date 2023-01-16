@@ -40,6 +40,15 @@ public class PurchaseService : IPurchaseService
         return ResultService.Ok<ReadPurchaseDTO>(readPurchaseDTO, data.Id);
     }
 
+    public async Task<ResultService> Delete(int id)
+    {
+        var purchase = await _purchaseRepository.GetById(id);
+        if (purchase == null)
+            return ResultService.Fail("Compra não encontrada");
+        await _purchaseRepository.Delete(purchase);
+        return ResultService.Ok("NoContent");
+    }
+
     public async Task<ResultService<PurchaseDetailsDTO>> GetById(int id)
     {
         var purchase = await _purchaseRepository.GetById(id);
@@ -53,5 +62,24 @@ public class PurchaseService : IPurchaseService
     {
         var purchases = await _purchaseRepository.GetPurchases();
         return ResultService.Ok<ICollection<PurchaseDetailsDTO>>(_mapper.Map<ICollection<PurchaseDetailsDTO>>(purchases));
+    }
+
+    public async Task<ResultService> Update(int id, PurchaseDTO purchaseDTO)
+    {
+        var result = new PurchaseDTOValidator().Validate(purchaseDTO);
+        if (!result.IsValid)
+            return ResultService.RequestError("Problema na validação", result);
+
+        var purchase = await _purchaseRepository.GetById(id);
+        if (purchase == null)
+            return ResultService.Fail("Compra não encontrada");
+
+        var productId = await _productRepository.GetIdByCode(purchaseDTO.Code);
+        var personId = await _personRepository.GetIdByDocument(purchaseDTO.Document);
+        purchase.Update(id, productId, personId);
+
+        purchase = _mapper.Map(purchaseDTO, purchase);
+        await _purchaseRepository.Update(purchase);
+        return ResultService.Ok("NoContent");
     }
 }
