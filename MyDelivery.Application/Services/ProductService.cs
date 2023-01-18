@@ -47,9 +47,9 @@ public class ProductService : IProductService
         return ResultService.Ok<ReadProductDTO>(_mapper.Map<ReadProductDTO>(product));
     }
 
-    public async Task<ResultService<ICollection<ReadProductDTO>>> GetProducts()
+    public async Task<ResultService<ICollection<ReadProductDTO>>> GetProducts(int page, int rows)
     {
-        var products = await _productRepository.GetProducts();
+        var products = await _productRepository.GetProducts(page, rows);
         return ResultService.Ok<ICollection<ReadProductDTO>>(_mapper.Map<ICollection<ReadProductDTO>>(products));
     }
 

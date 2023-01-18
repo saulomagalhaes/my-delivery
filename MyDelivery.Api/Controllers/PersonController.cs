@@ -35,9 +35,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetPeople()
+    public async Task<ActionResult> GetPeople([FromQuery] int page = 1, [FromQuery] int rows = 10)
     {
-        var result = await _personService.GetPeople();
+        var result = await _personService.GetPeople(page, rows);
         if(result.Sucess)
             return Ok(result.Data);
         return BadRequest(new { errors = result.Errors });

@@ -38,9 +38,9 @@ public class ProductRepository : IProductRepository
         return (await _db.Products.FirstOrDefaultAsync(p => p.Code == code))?.Id ?? 0; 
     }
 
-    public async Task<ICollection<Product>> GetProducts()
+    public async Task<ICollection<Product>> GetProducts(int page, int rows)
     {
-        return await _db.Products.ToListAsync();
+        return await _db.Products.Skip((page - 1) * rows).Take(rows).ToListAsync();
     }
 
     public async Task Update(Product product)

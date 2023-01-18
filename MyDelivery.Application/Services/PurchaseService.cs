@@ -58,9 +58,9 @@ public class PurchaseService : IPurchaseService
         return ResultService.Ok<PurchaseDetailsDTO>(_mapper.Map<PurchaseDetailsDTO>(purchase)); 
     }
 
-    public async Task<ResultService<ICollection<PurchaseDetailsDTO>>> GetPurchases()
+    public async Task<ResultService<ICollection<PurchaseDetailsDTO>>> GetPurchases(int page, int rows)
     {
-        var purchases = await _purchaseRepository.GetPurchases();
+        var purchases = await _purchaseRepository.GetPurchases(page, rows);
         return ResultService.Ok<ICollection<PurchaseDetailsDTO>>(_mapper.Map<ICollection<PurchaseDetailsDTO>>(purchases));
     }
 

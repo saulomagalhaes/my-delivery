@@ -4,7 +4,7 @@ namespace MyDelivery.Domain.Contracts.Repositories;
 
 public interface IPurchaseRepository
 {
-    Task<ICollection<Purchase>> GetPurchases();
+    Task<ICollection<Purchase>> GetPurchases(int page, int rows);
     Task<Purchase> GetById(int id);
     Task<Purchase> Create(Purchase purchase);
     Task Update(Purchase purchase);

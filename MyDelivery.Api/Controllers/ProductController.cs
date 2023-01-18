@@ -35,9 +35,9 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetProducts()
+    public async Task<ActionResult> GetProducts([FromQuery] int page = 1, [FromQuery] int rows = 10)
     {
-        var result = await _productService.GetProducts();
+        var result = await _productService.GetProducts(page, rows);
         if (result.Sucess)
             return Ok(result.Data);
         return BadRequest(new { errors = result.Errors });

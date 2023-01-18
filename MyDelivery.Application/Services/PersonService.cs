@@ -45,9 +45,9 @@ public class PersonService : IPersonService
         return ResultService.Ok<ReadPersonDTO>(_mapper.Map<ReadPersonDTO>(person));
     }
 
-    public async Task<ResultService<ICollection<ReadPersonDTO>>> GetPeople()
+    public async Task<ResultService<ICollection<ReadPersonDTO>>> GetPeople(int page, int rows)
     {
-        var people = await _personRepository.GetPeople();
+        var people = await _personRepository.GetPeople(page, rows);
         return ResultService.Ok<ICollection<ReadPersonDTO>>(_mapper.Map<ICollection<ReadPersonDTO>>(people));
     }
 

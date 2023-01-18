@@ -35,9 +35,9 @@ public class PersonRepository : IPersonRepository
         return (await _db.People.FirstOrDefaultAsync(p => p.Document == document))? .Id ?? 0;
     }
 
-    public async Task<ICollection<Person>> GetPeople()
+    public async Task<ICollection<Person>> GetPeople(int page, int rows )
     {
-        return await _db.People.ToListAsync();
+        return await _db.People.Skip((page -1) * rows).Take(rows).ToListAsync();
     }
 
     public async Task Update(Person person)

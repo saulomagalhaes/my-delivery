@@ -4,7 +4,7 @@ namespace MyDelivery.Domain.Contracts.Repositories;
 
 public interface IPersonRepository
 {
-    Task<ICollection<Person>> GetPeople();
+    Task<ICollection<Person>> GetPeople(int page, int rows);
     Task<Person> GetById(int id);
     Task<Person> Create(Person person);
     Task Update(Person person);

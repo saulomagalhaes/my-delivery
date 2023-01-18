@@ -35,9 +35,9 @@ public class PurchaseController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetPurchases()
+    public async Task<ActionResult> GetPurchases([FromQuery] int page = 1, [FromQuery] int rows = 10)
     {
-        var result = await _purchaseService.GetPurchases();
+        var result = await _purchaseService.GetPurchases(page, rows);
         if (result.Sucess)
             return Ok(result.Data);
         return BadRequest(result);

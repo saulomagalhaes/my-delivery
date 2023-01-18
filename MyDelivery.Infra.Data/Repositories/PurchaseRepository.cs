@@ -53,11 +53,13 @@ public class PurchaseRepository : IPurchaseRepository
                 .Where(p => p.ProductId == productId).ToListAsync();
     }
 
-    public async Task<ICollection<Purchase>> GetPurchases()
+    public async Task<ICollection<Purchase>> GetPurchases(int page, int rows)
     {
         return await _db.Purchases
                 .Include(p => p.Product)
                 .Include(p => p.Person)
+                .Skip((page - 1) * rows)
+                .Take(rows)
                 .ToListAsync();
     }
 
