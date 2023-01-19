@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MyDelivery.Application.Profiles;
 using MyDelivery.Application.Services;
 using MyDelivery.Application.Services.Contracts;
+using MyDelivery.Domain.Authentication;
 using MyDelivery.Domain.Contracts.Repositories;
+using MyDelivery.Infra.Data.Authentication;
 using MyDelivery.Infra.Data.Context;
 using MyDelivery.Infra.Data.Repositories;
 
@@ -21,7 +23,9 @@ public static class DependencyInjection
         services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ITokenGenerator, TokenGenerator>();
         return services;
     }
 
@@ -31,6 +35,7 @@ public static class DependencyInjection
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPurchaseService, PurchaseService>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 

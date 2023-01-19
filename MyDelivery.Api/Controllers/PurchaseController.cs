@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyDelivery.Application.DTOs.Purchase;
 using MyDelivery.Application.Services;
 using MyDelivery.Application.Services.Contracts;
@@ -6,6 +7,7 @@ using MyDelivery.Domain.Validations;
 
 namespace MyDelivery.Api.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PurchaseController : ControllerBase

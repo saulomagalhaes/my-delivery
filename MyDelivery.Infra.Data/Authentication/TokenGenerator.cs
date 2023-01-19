@@ -18,7 +18,7 @@ public class TokenGenerator : ITokenGenerator
         };
 
         var expires = DateTime.Now.AddDays(1);
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mydelivery"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("My-Delivery1010Ok!"));
         var tokenData = new JwtSecurityToken(
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
             expires: expires,
